@@ -1,0 +1,27 @@
+body {
+    background-color: #e2e2e2;
+    color: #111111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main h1 {
+    text-align: center;
+}
+
+main form {
+    display: flex;
+    flex-direction: column;
+}
+
+main form label, main form input {
+    margin-bottom: 5px;
+}
+main form label {
+    cursor: pointer;
+}
+
+main form input {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #3a3a3a;
+}

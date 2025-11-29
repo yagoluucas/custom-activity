@@ -1,3 +1,4 @@
+// Aonde tem a lógica dentro do Journey Builder, registra as informações
 define([
     'postmonger'
 ], function (Postmonger) {
@@ -17,10 +18,10 @@ define([
             const inArgs = payload['arguments'].execute.inArguments[0];
 
             if(inArgs.name) {
-                document.getElementById('name').value = inArgs.name;
+                document.getElementById('deName').value = inArgs.name;
             }
-            if(inArgs.email) {
-                document.getElementById('email').value = inArgs.email;
+            if(inArgs.labelName) {
+                document.getElementById('labelName').value = inArgs.labelName;
             }
         }
     });
@@ -28,20 +29,20 @@ define([
     // Evento para quando o usuário clica em "Próximo" ou "Concluído"
     connection.on('clickedNext', function() {       
         // pegar o nome dos inputs
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
+        const deName = document.getElementById('deName').value;
+        const labelName = document.getElementById('labelName').value;
 
         // Salvar a configuração no payload
         payload['arguments'].execute.inArguments = [{
-            name: name,
-            email: email
+            deName: deName,
+            labelName: labelName
         }];
 
         payload['metaData'].isConfigured = true;
         
         // Enviar payload de volta para Journey Builder
         connection.trigger('updateActivity', payload);
-        insertContact(name, email);
+        insertContact(deName, labelName);
     });
 
     // Evento para quando o usuário clica em "Voltar"
