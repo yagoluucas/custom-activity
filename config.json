@@ -1,6 +1,7 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
+    "icon": "https://custom-activity-zeta.vercel.app/images/icon.svg",
     "category": "customer",
     "expressionBuilderPrefix": "InsertContact",
     "configOnDrop": true
