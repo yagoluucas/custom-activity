@@ -1,14 +1,11 @@
 {
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
-        { "key": "X-Frame-Options", "value": "ALLOWALL" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors *;" }
-      ]
-    }
+  "version": 2,
+  "public": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/customActivity.js", "destination": "/customActivity.js" },
+    { "source": "/style.css", "destination": "/style.css" },
+    { "source": "/images/icon.svg", "destination": "/images/icon.svg" },
+    { "source": "/config.json", "destination": "/config.json" }
   ]
 }
