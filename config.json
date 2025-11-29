@@ -1,36 +1,52 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "category": "message",
-    "expressionBuilderPrefix": "InsertContact",
-    "configOnDrop": true
+    "category": "message"
   },
   "type": "REST",
   "lang": {
-    "pt-BR": {
-      "name": "Insert Contact na DE",
-      "description": "Teste de Custom Activity"
-    }
-  },
-  "userInterfaces": {
-    "configModal": {
-      "height": 400,
-      "width": 600
+    "en-US": {
+      "name": "REST Activity (Workflow API v1.1)",
+      "description": "An example REST activity using workflow API v1.1 format."
     }
   },
   "arguments": {
     "execute": {
       "inArguments": [
         {
-          "contactKey": "{{Context.ContactKey}}"
+          "emailAddress": "{{InteractionDefaults.Email}}"
+        },
+        {
+          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
         }
       ],
       "outArguments": [
         {
-          "resultado": "success"
+          "outArguments": ""
         }
       ],
-      "url": "https://custom-activity-zeta.vercel.app/api/execute.js"
+      "url": "https://custom-activity-zeta.vercel.app/execute"
+    }
+  },
+  "configurationArguments": {
+    "save": {
+      "url": "https://custom-activity-zeta.vercel.app/save"
+    },
+    "publish": {
+      "url": "https://custom-activity-zeta.vercel.app/publish"
+    },
+    "validate": {
+      "url": "https://custom-activity-zeta.vercel.app/validate"
+    },
+    "stop": {
+      "url": "https://custom-activity-zeta.vercel.app/stop"
+    }
+  },
+  "userInterfaces": {
+    "configModal": {
+      "height": 200,
+      "width": 300,
+      "fullscreen": true
     }
   }
 }
