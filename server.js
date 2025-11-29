@@ -6,7 +6,7 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('.')); // Serve arquivos estáticos da raiz
+app.use(express.static(path.join(__dirname)));
 
 // Rota para servir o config.json
 app.get('/', (req, res) => {

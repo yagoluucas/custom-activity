@@ -1,10 +1,9 @@
-// Lógica de integração com o Journey Builder
 define([
     'postmonger'
 ], function (Postmonger) {
     'use strict';
 
-    var connection = new Postmonger.Session();
+    const connection = new Postmonger.Session();
     var payload = {};
 
     window.addEventListener('load', function() {
