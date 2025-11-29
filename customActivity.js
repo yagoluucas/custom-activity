@@ -1,3 +1,4 @@
+import { insertContact } from "./js/insertContact.js";
 define([
     'postmonger'
 ], function (Postmonger) {
@@ -26,9 +27,7 @@ define([
     });
 
     // Evento para quando o usuário clica em "Próximo" ou "Concluído"
-    connection.on('clickedNext', function() {
-        console.log('Clicou em Próximo');
-        
+    connection.on('clickedNext', function() {       
         // pegar o nome dos inputs
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
@@ -43,13 +42,11 @@ define([
         
         // Enviar payload de volta para Journey Builder
         connection.trigger('updateActivity', payload);
-        console.log('Dados salvos:', payload['arguments'].execute.inArguments[0]);
+        insertContact(name, email);
     });
 
     // Evento para quando o usuário clica em "Voltar"
-    connection.on('clickedBack', function() {
-        connection.trigger('prevStep');
-    });
+    
 
     connection.trigger('ready');
 });
