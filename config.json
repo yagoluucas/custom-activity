@@ -1,69 +1,36 @@
 {
   "workflowApiVersion": "1.1",
-  "name": "Custom Activity Name",
-  "description": "Custom Activity Description",
   "metaData": {
-    "icon": "images/icon.svg",
-    "category": "Custom"
+    "category": "customer",
+    "expressionBuilderPrefix": "InsertContact",
+    "configOnDrop": true
   },
   "type": "REST",
   "lang": {
     "pt-BR": {
-      "name": "Localized Custom Activity Name",
-      "description": "Localized Custom Activity Description"
+      "name": "Insert Contact",
+      "description": "Teste de Custom Activity"
+    }
+  },
+  "userInterfaces": {
+    "configModal": {
+      "height": 400,
+      "width": 600
     }
   },
   "arguments": {
     "execute": {
       "inArguments": [
         {
-          "staticValue": 0,
-          "databoundEmailAddress": "{{Event.EventKey.EmailAddress}}"
+          "contactKey": "{{Context.ContactKey}}"
         }
       ],
       "outArguments": [
         {
-          "returnValue": "default"
+          "resultado": "success"
         }
       ],
-      "timeout": 10000,
-      "retryCount": 1,
-      "retryDelay": 1000,
-      "concurrentRequests": 6,
       "url": "https://custom-activity-zeta.vercel.app/execute"
     }
-  },
-  "schema": {
-    "arguments": {
-      "execute": {
-        "inArguments": [
-          {
-            "staticValue": {
-              "dataType": "Number",
-              "isNullable": false,
-              "direction": "in"
-            },
-            "databoundEmailAddress": {
-              "dataType": "Email",
-              "isNullable": false,
-              "direction": "in"
-            }
-          }
-        ],
-        "outArguments": [
-          {
-            "returnValue": {
-              "dataType": "Text",
-              "isNullable": false,
-              "direction": "out"
-            }
-          }
-        ]
-      }
-    }
-  },
-  "copySettings": {
-    "allowCopy": true,
-    "ignoreArguments": ["eventDefinitionKey"]
   }
 }
