@@ -7,7 +7,8 @@ define([
     var connection = new Postmonger.Session();
     var payload = {};
 
-    $(window).ready(function() {
+    window.addEventListener('load', function() {
+        console.log('Custom Activity Loaded');
         connection.trigger('ready');
     });
 
@@ -17,35 +18,43 @@ define([
         
         // Carregar dados salvos anteriormente
         if (payload['arguments'] && payload['arguments'].execute && 
-            payload['arguments'].execute.inArguments) {
-            
-            var inArguments = payload['arguments'].execute.inArguments;
-            
-            // Recuperar valores salvos
-            if (inArguments[0] && inArguments[0].setting1) {
-                $('#setting1').val(inArguments[0].setting1);
+            payload['arguments'].execute.inArguments[0]) {
+
+            const inArgs = payload['arguments'].execute.inArguments[0];
+
+            if(inArgs.setting1) {
+                document.getElementById('setting1').value = inArgs.setting1;
+            }
+            if(inArgs.setting2) {
+                document.getElementById('setting2').value = inArgs.setting2;
             }
         }
     });
 
     // Evento para quando o usuário clica em "Próximo" ou "Concluído"
     connection.on('clickedNext', function() {
-        // Validar dados
-        if ($('#setting1').val() === '') {
-            alert('Por favor, preencha a Configuração 1');
+        console.log('Clicou em Próximo');
+        
+        // pegar o nome dos inputs
+        const setting1 = document.getElementById('setting1').value;
+        const setting2 = document.getElementById('setting2').value;
+
+        if (setting1 === '' || setting2 === '' ) {
+            alert('Por favor, preencha a Configuração 1 e 2');
             return;
         }
 
         // Salvar a configuração no payload
         payload['arguments'].execute.inArguments = [{
-            setting1: $('#setting1').val(),
-            setting2: $('#setting2').val()
+            setting1: setting1,
+            setting2: setting2
         }];
 
         payload['metaData'].isConfigured = true;
         
         // Enviar payload de volta para Journey Builder
         connection.trigger('updateActivity', payload);
+        console.log('Dados salvos:', payload);
     });
 
     // Evento para quando o usuário clica em "Voltar"

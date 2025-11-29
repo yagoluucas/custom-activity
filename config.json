@@ -1,19 +1,36 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "icon": "images/icon.svg",
-    "category": "custom"
+    "icon": "images/icon.png",
+    "category": "custom",
+    "isConfigured": false
   },
   "type": "REST",
   "lang": {
     "pt-BR": {
       "name": "Insert Contact",
-      "description": "Descrição da minha custom activity personalizada"
+      "description": "Teste de Custom Activity"
     }
   },
   "userInterfaces": {
-    "configInspector" : {
-        "size": "medium"
+    "configModal": {
+      "height": 400,
+      "width": 600
+    }
+  },
+  "arguments": {
+    "execute": {
+      "inArguments": [
+        {
+          "contactKey": "{{Context.ContactKey}}"
+        }
+      ],
+      "outArguments": [
+        {
+          "resultado": "success"
+        }
+      ],
+      "url": "https://seu-dominio.com/execute"
     }
   }
 }
