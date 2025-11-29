@@ -2,8 +2,7 @@
   "workflowApiVersion": "1.1",
   "metaData": {
     "icon": "images/icon.png",
-    "category": "custom",
-    "isConfigured": false
+    "category": "custom"
   },
   "type": "REST",
   "lang": {
@@ -30,7 +29,7 @@
           "resultado": "success"
         }
       ],
-      "url": "http://localhost:3000/execute"
+      "url": "https://custom-activity-zeta.vercel.app/execute"
     }
   }
 }
