@@ -32,23 +32,24 @@ define(["postmonger"], function (Postmonger) {
     const deName = document.getElementById("deName").value;
     const labelName = document.getElementById("labelName").value;
 
-    if (deName === "" || labelName === "") {
+    if (deName === "" && labelName === "") {
       alert("Por favor, preencha todos os campos.");
-    } else {
-      // Salvar a configuração no payload
-      payload["arguments"].execute.inArguments = [
-        {
-          deName: deName,
-          labelName: labelName,
-        },
-      ];
-
-      payload["metaData"].isConfigured = true;
-
-      // Enviar payload de volta para Journey Builder
-      connection.trigger("updateActivity", payload);
-      console.log("Payload enviado:", payload);
+      return;
     }
+
+    // Salvar a configuração no payload
+    payload["arguments"].execute.inArguments = [
+      {
+        deName: deName,
+        labelName: labelName,
+      },
+    ];
+
+    payload["metaData"].isConfigured = true;
+
+    // Enviar payload de volta para Journey Builder
+    connection.trigger("updateActivity", payload);
+    console.log("Payload enviado:", payload);
   });
 
   connection.trigger("ready");
