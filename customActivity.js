@@ -8,7 +8,6 @@ define([
 
     window.addEventListener('load', function() {
         console.log('Custom Activity Loaded');
-        connection.trigger('ready');
     });
 
     // Evento acionado quando a activity é inicializada
@@ -60,4 +59,6 @@ define([
     connection.on('clickedBack', function() {
         connection.trigger('prevStep');
     });
+
+    connection.trigger('ready');
 });
