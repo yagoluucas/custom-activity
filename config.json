@@ -1,8 +1,8 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "icon": "images/icon.png",
-    "category": "custom"
+    "icon": "https://custom-activity-zeta.vercel.app/images/icon.svg",
+    "category": "customer"
   },
   "type": "REST",
   "lang": {
