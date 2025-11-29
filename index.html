@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="style.css" />
     <script src="js/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/postmonger/1.0.1/postmonger.min.js"></script>
+    <script>
+      require.config({
+        paths: {
+          postmonger:
+            "https://cdnjs.cloudflare.com/ajax/libs/postmonger/1.0.1/postmonger.min",
+        },
+      });
+
+      require(["customActivity"]);
+    </script>
   </head>
   <body>
     <main id="step1" class="step">
@@ -20,6 +30,5 @@
         <input type="email" id="email" name="email" required />
       </form>
     </main>
-    <script src="customActivity.js"></script>
   </body>
 </html>
