@@ -6,10 +6,6 @@ define([
     const connection = new Postmonger.Session();
     var payload = {};
 
-    window.addEventListener('load', function() {
-        console.log('Custom Activity Loaded');
-    });
-
     // Evento acionado quando a activity é inicializada
     connection.on('initActivity', function(incomingPayload) {
         payload = incomingPayload;
@@ -20,11 +16,11 @@ define([
 
             const inArgs = payload['arguments'].execute.inArguments[0];
 
-            if(inArgs.setting1) {
-                document.getElementById('setting1').value = inArgs.setting1;
+            if(inArgs.name) {
+                document.getElementById('name').value = inArgs.name;
             }
-            if(inArgs.setting2) {
-                document.getElementById('setting2').value = inArgs.setting2;
+            if(inArgs.email) {
+                document.getElementById('email').value = inArgs.email;
             }
         }
     });
@@ -34,18 +30,18 @@ define([
         console.log('Clicou em Próximo');
         
         // pegar o nome dos inputs
-        const setting1 = document.getElementById('setting1').value;
-        const setting2 = document.getElementById('setting2').value;
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
 
-        if (setting1 === '' || setting2 === '' ) {
-            alert('Por favor, preencha a Configuração 1 e 2');
+        if (name === '' || email === '' ) {
+            alert('Por favor, preencha o Nome e Email');
             return;
         }
 
         // Salvar a configuração no payload
         payload['arguments'].execute.inArguments = [{
-            setting1: setting1,
-            setting2: setting2
+            name: name,
+            email: email
         }];
 
         payload['metaData'].isConfigured = true;
