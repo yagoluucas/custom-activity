@@ -1,4 +1,3 @@
-import { insertContact } from "./js/insertContact.js";
 define([
     'postmonger'
 ], function (Postmonger) {
@@ -50,5 +49,3 @@ define([
 
     connection.trigger('ready');
 });
-
- export {}; 

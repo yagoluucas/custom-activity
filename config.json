@@ -1,14 +1,14 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "category": "customer",
+    "category": "message",
     "expressionBuilderPrefix": "InsertContact",
     "configOnDrop": true
   },
   "type": "REST",
   "lang": {
     "pt-BR": {
-      "name": "Insert Contact",
+      "name": "Insert Contact na DE",
       "description": "Teste de Custom Activity"
     }
   },
