@@ -33,11 +33,6 @@ define([
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
 
-        if (name === '' || email === '' ) {
-            alert('Por favor, preencha o Nome e Email');
-            return;
-        }
-
         // Salvar a configuração no payload
         payload['arguments'].execute.inArguments = [{
             name: name,
@@ -48,7 +43,7 @@ define([
         
         // Enviar payload de volta para Journey Builder
         connection.trigger('updateActivity', payload);
-        console.log('Dados salvos:', payload);
+        console.log('Dados salvos:', payload['arguments'].execute.inArguments[0]);
     });
 
     // Evento para quando o usuário clica em "Voltar"
