@@ -30,7 +30,7 @@
           "resultado": "success"
         }
       ],
-      "url": "https://custom-activity-zeta.vercel.app/execute"
+      "url": "https://custom-activity-zeta.vercel.app/api/execute.js"
     }
   }
 }
