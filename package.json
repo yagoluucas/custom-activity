@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "^5.1.0",
-    "postmonger": "^0.0.16"
+    "postmonger": "^0.0.16",
+    "tailwind": "^4.0.0"
   }
 }
