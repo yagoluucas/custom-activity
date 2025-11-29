@@ -1,0 +1,19 @@
+{
+  "workflowApiVersion": "1.1",
+  "metaData": {
+    "icon": "images/icon.svg",
+    "category": "custom"
+  },
+  "type": "REST",
+  "lang": {
+    "pt-BR": {
+      "name": "Insert Contact",
+      "description": "Descrição da minha custom activity personalizada"
+    }
+  },
+  "userInterfaces": {
+    "configInspector" : {
+        "size": "medium"
+    }
+  }
+}
