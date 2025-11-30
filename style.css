@@ -16,9 +16,15 @@ main section.logo {
     gap: 15px;
 }
 
-main h1, main h2 {
+main h1, main p {
     text-align: center;
     font-size: 2rem;
+}
+
+main p {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 1.25rem;
 }
 
 main form {
@@ -28,7 +34,7 @@ main form {
 
 main form label, main form input {
     margin-bottom: 5px;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 main form label {
     cursor: pointer;

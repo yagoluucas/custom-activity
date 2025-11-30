@@ -1,5 +1,6 @@
 {
   "workflowApiVersion": "1.1",
+  "key": "0f4a88d9-6a26-45cc-a4e0-b54020181096",
   "metaData": {
     "category": "message"
   },
@@ -20,15 +21,15 @@
           "phoneNumber": "{{Contact.Default.PhoneNumber}}"
         }
       ],
-      "outArguments": [
-        {
-          "outArguments": ""
-        }
-      ],
+
+      "timeout": 10000,
+      "retryCount": 3,
+      "retryDelay": 2000,
       "url": "https://custom-activity-zeta.vercel.app/execute"
     }
   },
   "configurationArguments": {
+    "applicationExtensionKey": "0f4a88d9-6a26-45cc-a4e0-b54020181096",
     "save": {
       "url": "https://custom-activity-zeta.vercel.app/save"
     },
@@ -43,6 +44,7 @@
     }
   },
   "userInterfaces": {
+    "configurationSupportsReadOnlyMode": true,
     "configModal": {
       "height": 200,
       "width": 300,
