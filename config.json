@@ -21,7 +21,7 @@
           "phoneNumber": "{{Contact.Default.PhoneNumber}}"
         }
       ],
-
+      "outArguments": [],
       "timeout": 10000,
       "retryCount": 3,
       "retryDelay": 2000,
