@@ -1,5 +1,28 @@
-function catchBearerToken(){
-  return process.env.bearer_token_url;
+function catchBearerToken() {
+  const url = process.env.bearerTokenUrl;
+  const clienteId = process.env.clienteId;
+  const clienteSecret = process.env.clienteSecret;
+
+  const payloadReq = {
+    grant_type: "client_credentials",
+    client_id: clienteId,
+    client_secret: clienteSecret,
+  };
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payloadReq)
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
 }
 
 export default function execute(req, res) {
