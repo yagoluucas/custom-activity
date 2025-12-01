@@ -25,7 +25,7 @@ async function catchBearerToken() {
     }
 
     const data = await response.json();
-    
+    console.log(data.access_token)
     return data.access_token; // Retorna apenas o token
   } catch (error) {
     throw error;
@@ -48,14 +48,14 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${bearerToken}`,
+        Authorization: `BEARER ${bearerToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
-      throw new Error(`Erro ao inserir dados na DE: ${response.status}`);
+      throw new Error(`Erro ao inserir dados na DE: ${response.body}`);
     }
 
     const data = await response.json();
