@@ -25,7 +25,7 @@ async function catchBearerToken() {
     }
 
     const data = await response.json();
-    console.log(data.access_token)
+
     return data.access_token; // Retorna apenas o token
   } catch (error) {
     throw error;
@@ -34,15 +34,18 @@ async function catchBearerToken() {
 
 async function insertDe(inArguments, bearerToken, keyDaDe) {
   const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
+  console.log(url)
   
   const payload = {
     items: [
       {
-        UserKey: inArguments.contactKey || "teste",
-        email: inArguments.email || "yago.silva@pmweb.com",
+        UserKey: "teste",
+        email: "yago.silva@pmweb.com",
       },
     ],
   };
+
+  console.log(payload)
 
   try {
     const response = await fetch(url, {
