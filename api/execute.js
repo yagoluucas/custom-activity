@@ -1,9 +1,9 @@
 // api/execute.js
 
 async function catchBearerToken() {
-  const url = process.env.BEARER_TOKEN_URL;
-  const clienteId = process.env.CLIENTE_ID;
-  const clienteSecret = process.env.CLIENTE_SECRET;
+  const url = process.env.bearer_token_url;
+  const clienteId = process.env.client_id;
+  const clienteSecret = process.env.client_secret;
 
   const payloadReq = {
     grant_type: "client_credentials",
@@ -33,7 +33,7 @@ async function catchBearerToken() {
 }
 
 async function insertDe(inArguments, bearerToken, keyDaDe) {
-  const url = `${process.env.INSERT_DE_URL}${keyDaDe}/rows`;
+  const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
   
   const payload = {
     items: [
