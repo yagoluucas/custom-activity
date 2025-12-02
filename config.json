@@ -6,7 +6,7 @@
   },
   "type": "REST",
   "lang": {
-    "en-US": {
+    "pt-BR": {
       "name": "Insert Contact",
       "description": "activity que insere contatos em uma data extension"
     }
@@ -15,39 +15,42 @@
     "execute": {
       "inArguments": [
         {
-          "emailAddress": "{{InteractionDefaults.Email}}"
+          "email": "{{Contact.Default.Email}}"
         },
         {
-          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+          "contactKey": "{{Contact.Key}}"
         }
       ],
-      "outArguments": [],
+      "outArguments": [
+                {
+          "returnValue": "default"
+        }
+      ],
       "timeout": 10000,
       "retryCount": 3,
       "retryDelay": 2000,
-      "url": "https://custom-activity-zeta.vercel.app/execute"
+      "url": "https://custom-activity-zeta.vercel.app/api/execute"
     }
   },
   "configurationArguments": {
     "applicationExtensionKey": "bc95763f-cfa3-4d2a-a8ce-05e184c87cd8",
     "save": {
-      "url": "https://custom-activity-zeta.vercel.app/save"
+      "url": "https://custom-activity-zeta.vercel.app/api/save"
     },
     "publish": {
-      "url": "https://custom-activity-zeta.vercel.app/publish"
+      "url": "https://custom-activity-zeta.vercel.app/api/publish"
     },
     "validate": {
-      "url": "https://custom-activity-zeta.vercel.app/validate"
+      "url": "https://custom-activity-zeta.vercel.app/api/validate"
     },
     "stop": {
-      "url": "https://custom-activity-zeta.vercel.app/stop"
+      "url": "https://custom-activity-zeta.vercel.app/api/stop"
     }
   },
   "userInterfaces": {
-    "configurationSupportsReadOnlyMode": true,
     "configModal": {
-      "height": 200,
-      "width": 300,
+      "height": 500,
+      "width": 500,
       "fullscreen": true
     }
   }

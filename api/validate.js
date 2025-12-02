@@ -1,5 +1,5 @@
 export default function stop(req, res) {
-    console.log("=== STOP ===");
+    console.log("===  VALIDATE ===");
     try {
         res.status(200).json({ status: "Activity stopped successfully" });
     } catch (error) {
