@@ -33,7 +33,7 @@
     }
   },
   "configurationArguments": {
-    "applicationExtensionKey": "0f4a88d9-6a26-45cc-a4e0-b54020181096",
+    "applicationExtensionKey": "bc95763f-cfa3-4d2a-a8ce-05e184c87cd8",
     "save": {
       "url": "https://custom-activity-zeta.vercel.app/api/save"
     },
