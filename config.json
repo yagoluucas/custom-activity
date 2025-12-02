@@ -46,8 +46,7 @@
   "userInterfaces": {
     "configurationSupportsReadOnlyMode": true,
     "configModal": {
-      "height": 500,
-      "width": 500
+      "fullscreen": true
     }
   }
 }
