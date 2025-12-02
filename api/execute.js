@@ -7,8 +7,8 @@ async function catchBearerToken() {
 
   const payloadReq = {
     grant_type: "client_credentials",
-    client_id: "9vwaxx6h2ub1iltefilac67n",
-    client_secret: "n52v8FqiPLamTfULLXugUbAA"
+    client_id: clienteId,
+    client_secret: clienteSecret
   };
 
   try {
