@@ -1,8 +1,6 @@
 export default function saveActivity(req, res) {
     console.log("=== SAVE ACTIVITY ===");
     try {
-        const inArgs = req.body.inArguments[0];
-        console.log("inArguments:", inArgs);
         res.status(200).json({ status: "Activity saved successfully" });
     } catch (error) {
         console.error("Error in /saveActivity:", error);

@@ -6,7 +6,7 @@
   },
   "type": "REST",
   "lang": {
-    "en-US": {
+    "pt-BR": {
       "name": "Insert Contact",
       "description": "activity que insere contatos em uma data extension"
     }
@@ -21,7 +21,11 @@
           "contactKey": "{{Contact.Key}}"
         }
       ],
-      "outArguments": [],
+      "outArguments": [
+                {
+          "returnValue": "default"
+        }
+      ],
       "timeout": 10000,
       "retryCount": 3,
       "retryDelay": 2000,
@@ -44,8 +48,9 @@
     }
   },
   "userInterfaces": {
-    "configurationSupportsReadOnlyMode": true,
     "configModal": {
+      "height": 500,
+      "width": 500,
       "fullscreen": true
     }
   }
