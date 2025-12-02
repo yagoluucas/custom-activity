@@ -7,8 +7,8 @@ async function catchBearerToken() {
 
   const payloadReq = {
     grant_type: "client_credentials",
-    client_id: clienteId,
-    client_secret: clienteSecret,
+    client_id: "9vwaxx6h2ub1iltefilac67n",
+    client_secret: "n52v8FqiPLamTfULLXugUbAA"
   };
 
   try {
@@ -21,6 +21,8 @@ async function catchBearerToken() {
     });
 
     if (!response.ok) {
+      console.log('Response status:', response.status);
+      console.log('Response body:', await response.text());
       throw new Error(`Erro ao obter bearer token: ${response.status}`);
     }
 
