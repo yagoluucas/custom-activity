@@ -1,5 +1,5 @@
 {
-  "workflowApiVersion": "1.1",
+  "workflowApiVersion": "1.0",
   "metaData": {
     "icon": "images/icon.png",
     "category": "customer"
@@ -22,6 +22,9 @@
         }
       ],
       "outArguments": [
+        {
+          "dafault": "ok"
+        }
       ],
       "timeout": 10000,
       "retryCount": 3,
@@ -30,24 +33,12 @@
     }
   },
   "configurationArguments": {
-    "applicationExtensionKey": "bbcfc53d-ef0e-4e80-8297-748608582855",
-    "save": {
-      "url": "https://custom-activity-zeta.vercel.app/api/save"
-    },
-    "publish": {
-      "url": "https://custom-activity-zeta.vercel.app/api/publish"
-    },
-    "validate": {
-      "url": "https://custom-activity-zeta.vercel.app/api/validate"
-    },
-    "stop": {
-      "url": "https://custom-activity-zeta.vercel.app/api/stop"
-    }
+    "applicationExtensionKey": "bbcfc53d-ef0e-4e80-8297-748608582855"
   },
   "userInterfaces": {
     "configModal": {
-      "height": 100,
-      "width": 100
+      "height": 300,
+      "width": 300
     }
   }
 }
