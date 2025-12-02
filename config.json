@@ -15,10 +15,10 @@
     "execute": {
       "inArguments": [
         {
-          "emailAddress": "{{InteractionDefaults.Email}}"
+          "email": "{{Contact.Default.Email}}"
         },
         {
-          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+          "contactKey": "{{Contact.Key}}"
         }
       ],
       "outArguments": [],
