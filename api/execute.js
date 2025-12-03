@@ -74,8 +74,7 @@ export default async function execute(req, res) {
   console.log("=== EXECUTE ===");
   
   try {
-    const inArgs = req.body.inArguments?.[0];
-    console.log("inArguments recebidos:", inArgs);
+    const inArgs = req.body.inArguments;
 
     console.log("RAW BODY:", JSON.stringify(req.body, null, 2))
 
