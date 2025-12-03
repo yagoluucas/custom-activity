@@ -22,10 +22,10 @@ define(["postmonger"], function (Postmonger) {
 
     // let existingArgs = payload?.arguments?.execute?.inArguments || {};
 
-    payload?.arguments?.execute?.inArguments = [
-      {email: "yagodoteste123@pmweb.com.br"},
-      {contactKey: "{{Contact.Key}}"}
-    ]
+    // payload?.arguments?.execute?.inArguments = [
+    //   {email: "yagodoteste123@pmweb.com.br"},
+    //   {contactKey: "{{Contact.Key}}"}
+    // ]
 
     // transforma em um objeto só
     // let mergedArgs = Object.assign({}, existingArgs);
