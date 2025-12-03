@@ -18,7 +18,7 @@
     "execute": {
       "inArguments": [
         {
-          "email": "{{Contact.Default.Email}}"
+          "email": "{{Contact.Email}}"
         },
         {
           "contactKey": "{{Contact.Key}}"
