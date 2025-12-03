@@ -28,10 +28,10 @@ define(["postmonger"], function (Postmonger) {
     // adiciona os novos valores
     mergedArgs.nomeCampanha = nomeCampanha;
 
-    // reatribui como array de objetos (formato que a SFMC exige)
-    payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
-      [key]: mergedArgs[key],
-    }));
+    // // reatribui como array de objetos (formato que a SFMC exige)
+    // payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
+    //   [key]: mergedArgs[key],
+    // }));
 
     payload.metaData.isConfigured = true;
 
