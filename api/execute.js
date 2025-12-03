@@ -77,6 +77,8 @@ export default async function execute(req, res) {
     const inArgs = req.body.inArguments?.[0];
     console.log("inArguments recebidos:", inArgs);
 
+    console.log("RAW BODY:", JSON.stringify(req.body, null, 2))
+
     if (!inArgs) {
       return res.status(400).json({ 
         error: "inArguments não fornecido" 
