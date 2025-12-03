@@ -40,6 +40,8 @@ define(["postmonger"], function (Postmonger) {
       [key]: mergedArgs[key],
     }));
 
+    console.log("Payload final: ", payload);
+
     payload.metaData.isConfigured = true;
 
     connection.trigger("updateActivity", payload);
