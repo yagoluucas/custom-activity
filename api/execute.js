@@ -40,8 +40,8 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
   const payload = {
     items: [
       {
-        UserKey: inArguments.contactKey || "testandouma",
-        email: inArguments.email || "yago.silva@pmweb.com",
+        UserKey: inArguments.contactKey,
+        email: inArguments.email
       },
     ],
   };

@@ -9,37 +9,29 @@ define(["postmonger"], function (Postmonger) {
 
     const inArgs = payload?.arguments?.execute?.inArguments;
 
-    console.log("Saved Arguments: ", inArgs);
+    if(inArgs.campaignName && inArgs.campaignName.length > 0){
+      document.getElementById("campaignName").value = inArgs.campaignName;
+    }
   });
 
   connection.on("clickedNext", function () {
-    const deName = document.getElementById("deName").value;
-    const labelName = document.getElementById("labelName").value;
+    const campaignName = document.getElementById("campaignName").value;
 
-    if (!deName || !labelName) {
+    if (!campaignName) {
       alert("Por favor, preencha todos os campos obrigatórios.");
     }
 
-    // let existingArgs = payload?.arguments?.execute?.inArguments || {};
+    let existingArgs = payload?.arguments?.execute?.inArguments || {};
 
-    // payload?.arguments?.execute?.inArguments = [
-    //   {email: "yagodoteste123@pmweb.com.br"},
-    //   {contactKey: "{{Contact.Key}}"}
-    // ]
+    let mergedArgs = Object.assign({}, existingArgs);
 
-    // transforma em um objeto só
-    // let mergedArgs = Object.assign({}, existingArgs);
+    // adiciona os novos valores
+    mergedArgs.campaignName = campaignName;
 
-    // // adiciona os novos valores
-    // mergedArgs.deName = deName;
-    // mergedArgs.labelName = labelName;
-
-    // // reatribui como array de objetos (formato que a SFMC exige)
-    // payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
-    //   [key]: mergedArgs[key],
-    // }));
-
-    console.log("Payload final: ", payload);
+    // reatribui como array de objetos (formato que a SFMC exige)
+    payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
+      [key]: mergedArgs[key],
+    }));
 
     payload.metaData.isConfigured = true;
 
