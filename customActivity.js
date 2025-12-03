@@ -11,8 +11,12 @@ define(["postmonger"], function (Postmonger) {
 
     const savedArgs = Object.assign({}, ...inArgs);
 
+    if (!savedArgs.deName || !savedArgs.labelName) {
+      connection.trigger('updateButton', { button: 'next', text: 'Preencha os campos', enabled: false });
+    }
+
     if (savedArgs.deName) {
-      document.getElementById("deName").value = savedArgs.deName;
+      document.getElementById("deName").value = savedArgs.emailDD;
     }
     if (savedArgs.labelName) {
       document.getElementById("labelName").value = savedArgs.labelName;
@@ -23,13 +27,15 @@ define(["postmonger"], function (Postmonger) {
     const deName = document.getElementById("deName").value;
     const labelName = document.getElementById("labelName").value;
 
-    if (!deName || !labelName) return;
+    if (!deName || !labelName) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+    }
 
     // pega os argumentos já existentes no config.json (como email/contactKey)
-    let existingArgs = payload?.arguments?.execute?.inArguments || [];
+    let existingArgs = payload?.arguments?.execute?.inArguments || {};
 
     // transforma em um objeto só
-    let mergedArgs = Object.assign({}, ...existingArgs);
+    let mergedArgs = Object.assign({}, existingArgs);
 
     // adiciona os novos valores
     mergedArgs.deName = deName;
