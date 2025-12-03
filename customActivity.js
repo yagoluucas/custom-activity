@@ -9,33 +9,33 @@ define(["postmonger"], function (Postmonger) {
 
     const inArgs = payload?.arguments?.execute?.inArguments;
 
-    if(inArgs.campaignName && inArgs.campaignName.length > 0){
-      document.getElementById("campaignName").value = inArgs.campaignName;
+    if(inArgs.nomeCampanha && inArgs.nomeCampanha.length > 0){
+      document.getElementById("nomeCampanha").value = inArgs.nomeCampanha;
     }
   });
 
   connection.on("clickedNext", function () {
-    const campaignName = document.getElementById("campaignName").value;
+    const nomeCampanha = document.getElementById("nomeCampanha").value;
 
-    if (!campaignName) {
+    if (!nomeCampanha) {
       alert("Por favor, preencha todos os campos obrigatórios.");
     }
 
-    // let existingArgs = payload?.arguments?.execute?.inArguments || {};
+    let existingArgs = payload?.arguments?.execute?.inArguments || {};
 
-    // let mergedArgs = Object.assign({}, existingArgs);
+    let mergedArgs = Object.assign({}, existingArgs);
 
-    // // adiciona os novos valores
-    // mergedArgs.campaignName = campaignName;
+    // adiciona os novos valores
+    mergedArgs.nomeCampanha = nomeCampanha;
 
-    // // reatribui como array de objetos (formato que a SFMC exige)
-    // payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
-    //   [key]: mergedArgs[key],
-    // }));
+    // reatribui como array de objetos (formato que a SFMC exige)
+    payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
+      [key]: mergedArgs[key],
+    }));
 
-    // payload.metaData.isConfigured = true;
+    payload.metaData.isConfigured = true;
 
-    // connection.trigger("updateActivity", payload);
+    connection.trigger("updateActivity", payload);
   });
 
   connection.trigger("ready");
