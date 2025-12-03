@@ -21,21 +21,21 @@ define(["postmonger"], function (Postmonger) {
       alert("Por favor, preencha todos os campos obrigatórios.");
     }
 
-    let existingArgs = payload?.arguments?.execute?.inArguments || {};
+    // let existingArgs = payload?.arguments?.execute?.inArguments || {};
 
-    let mergedArgs = Object.assign({}, existingArgs);
+    // let mergedArgs = Object.assign({}, existingArgs);
 
-    // adiciona os novos valores
-    mergedArgs.campaignName = campaignName;
+    // // adiciona os novos valores
+    // mergedArgs.campaignName = campaignName;
 
-    // reatribui como array de objetos (formato que a SFMC exige)
-    payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
-      [key]: mergedArgs[key],
-    }));
+    // // reatribui como array de objetos (formato que a SFMC exige)
+    // payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
+    //   [key]: mergedArgs[key],
+    // }));
 
-    payload.metaData.isConfigured = true;
+    // payload.metaData.isConfigured = true;
 
-    connection.trigger("updateActivity", payload);
+    // connection.trigger("updateActivity", payload);
   });
 
   connection.trigger("ready");
