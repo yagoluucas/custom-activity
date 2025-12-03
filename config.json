@@ -18,9 +18,6 @@
     "execute": {
       "inArguments": [
         {
-          "email": "{{Contact.Attribute.\"Contact\".\"Email Address\"}}"
-        },
-        {
           "contactKey": "{{Contact.Key}}"
         }
       ],

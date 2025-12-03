@@ -41,7 +41,7 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
     items: [
       {
         UserKey: inArguments.contactKey,
-        email: inArguments.email
+        email: inArguments.contactKey
       },
     ],
   };
