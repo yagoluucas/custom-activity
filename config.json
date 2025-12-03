@@ -18,7 +18,7 @@
     "execute": {
       "inArguments": [
         {
-          "email": "yago"
+          "emailDD": "yago"
         },
         {
           "contactKey": "{{Contact.Key}}"
@@ -36,6 +36,7 @@
     }
   },
   "configurationArguments": {
+    "applicationExtensionKey": "bbcfc53d-ef0e-4e80-8297-748608582855",
     "save": {
       "url": "https://custom-activity-zeta.vercel.app/api/save"
     },
@@ -51,7 +52,8 @@
   },
   "userInterfaces": {
     "configModal": {
-      "url": "index.html",
+      "height": 500,
+      "width": 500,
       "fullscreen": true
     }
   }
