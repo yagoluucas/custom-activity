@@ -46,6 +46,8 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
     ],
   };
 
+  console.log("Payload para inserção na DE:", JSON.stringify(payload, null, 2));
+
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -61,7 +63,7 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
     }
 
     const data = await response.json();
-    console.log("Dados inseridos na DE:", data);
+    console.log("Dados inseridos na DE: ", data);
     
     return data;
   } catch (error) {
