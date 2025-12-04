@@ -186,9 +186,5 @@ export default async function execute(req, res) {
     res.status(500).json({
       error: error.message || "Erro interno do servidor",
     });
-  } finally {
-    if (redis && redis.isOpen) {
-      await redis.disconnect();
-    }
   }
 }
