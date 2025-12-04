@@ -8,7 +8,7 @@ async function catchBearerToken() {
   const payloadReq = {
     grant_type: "client_credentials",
     client_id: clienteId,
-    client_secret: clienteSecret
+    client_secret: clienteSecret,
   };
 
   try {
@@ -21,8 +21,8 @@ async function catchBearerToken() {
     });
 
     if (!response.ok) {
-      console.log('Response status:', response.status);
-      console.log('Response body:', await response.text());
+      console.log("Response status:", response.status);
+      console.log("Response body:", await response.text());
       throw new Error(`Erro ao obter bearer token: ${response.status}`);
     }
 
@@ -36,15 +36,15 @@ async function catchBearerToken() {
 
 async function insertDe(inArguments, bearerToken, keyDaDe) {
   const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
-  
-  const payload = JSON.stringify({
+
+  const payload = {
     items: [
       {
-        UserKey: inArguments.contactKey,
-        email: inArguments.contactKey
-      }
-    ]
-  });
+        "UserKey": inArguments.contactKey,
+        "email": inArguments.contactKey,
+      },
+    ],
+  };
 
   console.log("Payload para inserção na DE: ", payload);
 
@@ -64,7 +64,7 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
 
     const data = await response.json();
     console.log("Dados inseridos na DE: ", data);
-    
+
     return data;
   } catch (error) {
     console.error("Erro em insertDe:", error);
@@ -74,15 +74,15 @@ async function insertDe(inArguments, bearerToken, keyDaDe) {
 
 export default async function execute(req, res) {
   console.log("=== EXECUTE ===");
-  
+
   try {
     const inArgs = req.body.inArguments;
 
-    console.log("RAW BODY:", JSON.stringify(req.body, null, 2))
+    console.log("RAW BODY:", JSON.stringify(req.body, null, 2));
 
     if (!inArgs) {
-      return res.status(400).json({ 
-        error: "inArguments não fornecido" 
+      return res.status(400).json({
+        error: "inArguments não fornecido",
       });
     }
 
@@ -90,20 +90,22 @@ export default async function execute(req, res) {
     const bearerToken = await catchBearerToken();
 
     // Passo 2: Inserir dados na DE
-    const keyDaDe = "75D1EDF7-3712-4582-AF65-CF01A92A9F67"
+    const keyDaDe = "75D1EDF7-3712-4582-AF65-CF01A92A9F67";
     const resultadoInsercao = await insertDe(inArgs, bearerToken, keyDaDe);
 
     // Passo 3: Retornar sucesso
     res.status(200).json({
-      outArguments: [{ 
-        resultado: "success",
-        message: "Dados inseridos na DE com sucesso",
-        data: resultadoInsercao
-      }],
+      outArguments: [
+        {
+          resultado: "success",
+          message: "Dados inseridos na DE com sucesso",
+          data: resultadoInsercao,
+        },
+      ],
     });
   } catch (error) {
-    res.status(500).json({ 
-      error: error.message || "Erro interno do servidor"
+    res.status(500).json({
+      error: error.message || "Erro interno do servidor",
     });
   }
 }
