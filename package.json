@@ -8,6 +8,7 @@
     "dev": "node server.js"
   },
   "dependencies": {
-    "postmonger": "^0.0.16"
+    "postmonger": "^0.0.16",
+    "redis": "^5.10.0"
   }
 }
