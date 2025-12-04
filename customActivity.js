@@ -21,17 +21,17 @@ define(["postmonger"], function (Postmonger) {
       alert("Por favor, preencha todos os campos obrigatórios.");
     }
 
-    let existingArgs = payload?.arguments?.execute?.inArguments || {};
+    let existingArgs = payload?.arguments?.execute?.inArguments || [];
 
-    let mergedArgs = Object.assign({}, existingArgs);
+    let mergedArgs = Object.assign({}, ...existingArgs);
 
     // adiciona os novos valores
     mergedArgs.nomeCampanha = nomeCampanha;
 
-    // // reatribui como array de objetos (formato que a SFMC exige)
-    // payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
-    //   [key]: mergedArgs[key],
-    // }));
+    // reatribui como array de objetos (formato que a SFMC exige)
+    payload.arguments.execute.inArguments = Object.keys(mergedArgs).map(key => ({
+      [key]: mergedArgs[key],
+    }));
 
     payload.metaData.isConfigured = true;
 
