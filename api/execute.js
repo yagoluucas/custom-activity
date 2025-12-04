@@ -37,16 +37,16 @@ async function catchBearerToken() {
 async function insertDe(inArguments, bearerToken, keyDaDe) {
   const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
   
-  const payload = {
+  const payload = JSON.stringify({
     items: [
       {
         UserKey: inArguments.contactKey,
         email: inArguments.contactKey
-      },
-    ],
-  };
+      }
+    ]
+  });
 
-  console.log("Payload para inserção na DE:", JSON.stringify(payload, null, 2));
+  console.log("Payload para inserção na DE: ", payload);
 
   try {
     const response = await fetch(url, {
