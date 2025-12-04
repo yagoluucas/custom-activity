@@ -34,16 +34,26 @@ async function catchBearerToken() {
   }
 }
 
-async function insertDe(inArguments, bearerToken, keyDaDe) {
-  const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
+async function insertDe(inArguments, bearerToken) {
+  const keyDataExtension = inArguments.filter((arg) =>
+    arg.hasOwnProperty("idDataExtension")
+  )[0].idDataExtension;
+  const contactKey = inArguments.filter((arg) =>
+    arg.hasOwnProperty("contactKey")
+  )[0].contactKey;
+  const campaignName = inArguments.filter((arg) =>
+    arg.hasOwnProperty("nomeCampanha")
+  )[0].nomeCampanha;
 
-  const contactKey = inArguments.filter((arg) => arg.hasOwnProperty("contactKey"))[0].contactKey;
+  const url = `${process.env.insert_de_url}${keyDataExtension}/rows`;
 
   const payload = {
     items: [
       {
-        "UserKey": contactKey,
-        "email": contactKey,
+        UserKey: contactKey,
+        email: contactKey,
+        date: new Date().toLocaleString(),
+        campaignName: campaignName,
       },
     ],
   };
@@ -90,8 +100,7 @@ export default async function execute(req, res) {
     const bearerToken = await catchBearerToken();
 
     // Passo 2: Inserir dados na DE
-    const keyDaDe = "75D1EDF7-3712-4582-AF65-CF01A92A9F67";
-    const resultadoInsercao = await insertDe(inArgs, bearerToken, keyDaDe);
+    const resultadoInsercao = await insertDe(inArgs, bearerToken);
 
     // Passo 3: Retornar sucesso
     res.status(200).json({
