@@ -30,7 +30,6 @@ async function getInfoFromCache() {
     const client = await getRedis();
     const token = await client.get("token");
     const expired = await client.get("expire");
-    console.log({ token, expiredDate: expired ? Number(expired) : null });
     return { token, expiredDate: expired ? Number(expired) : null };
   } catch (error) {
     console.log("Erro ao recuperar informações do cache: " + error);
@@ -52,7 +51,6 @@ async function setInfoFromCache(token, expire) {
 }
 
 async function fetchNewTokenFromApi() {
-  console.log('entrou aqui')
   const url = process.env.bearer_token_url;
   const clienteId = process.env.client_id;
   const clienteSecret = process.env.client_secret;
@@ -177,9 +175,7 @@ export default async function execute(req, res) {
     res.status(200).json({
       outArguments: [
         {
-          resultado: "success",
-          message: "Dados inseridos na DE com sucesso",
-          data: resultadoInsercao,
+          returnValue: "Dados inseridos com sucesso!"
         },
       ],
     });
