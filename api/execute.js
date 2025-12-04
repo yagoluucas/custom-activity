@@ -52,6 +52,7 @@ async function setInfoFromCache(token, expire) {
 }
 
 async function fetchNewTokenFromApi() {
+  console.log('entrou aqui')
   const url = process.env.bearer_token_url;
   const clienteId = process.env.client_id;
   const clienteSecret = process.env.client_secret;
