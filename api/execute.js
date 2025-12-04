@@ -37,13 +37,13 @@ async function catchBearerToken() {
 async function insertDe(inArguments, bearerToken, keyDaDe) {
   const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
 
-  console.log("InArguments recebidos: ", inArguments);
+  const contactKey = inArguments.filter((arg) => arg.hasOwnProperty("contactKey"))[0].contactKey;
 
   const payload = {
     items: [
       {
-        "UserKey": `${inArguments.contactKey}`,
-        "email": `${inArguments.contactKey}`,
+        "UserKey": contactKey,
+        "email": contactKey,
       },
     ],
   };
