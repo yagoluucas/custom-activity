@@ -9,8 +9,11 @@ define(["postmonger"], function (Postmonger) {
 
     const inArgs = payload?.arguments?.execute?.inArguments;
 
-    if(inArgs.nomeCampanha && inArgs.nomeCampanha.length > 0){
-      document.getElementById("nomeCampanha").value = inArgs.nomeCampanha;
+    // inArgs é um array de objectos
+
+    const nomeCampanha = inArgs.filter((arg) => arg.hasOwnProperty("nomeCampanha"))[0]?.nomeCampanha
+    if(nomeCampanha && nomeCampanha !== ""){
+        document.getElementById("nomeCampanha").value = nomeCampanha;
     }
   });
 
