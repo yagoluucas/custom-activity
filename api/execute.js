@@ -37,6 +37,8 @@ async function catchBearerToken() {
 async function insertDe(inArguments, bearerToken, keyDaDe) {
   const url = `${process.env.insert_de_url}${keyDaDe}/rows`;
 
+  console.log("InArguments recebidos: ", inArguments);
+
   const payload = {
     items: [
       {
@@ -77,8 +79,6 @@ export default async function execute(req, res) {
 
   try {
     const inArgs = req.body.inArguments;
-
-    console.log("RAW BODY:", JSON.stringify(req.body, null, 2));
 
     if (!inArgs) {
       return res.status(400).json({
