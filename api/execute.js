@@ -30,6 +30,7 @@ async function getInfoFromCache() {
     const client = await getRedis();
     const token = await client.get("token");
     const expired = await client.get("expire");
+    console.log({ token, expiredDate: expired ? Number(expired) : null });
     return { token, expiredDate: expired ? Number(expired) : null };
   } catch (error) {
     console.log("Erro ao recuperar informações do cache: " + error);
@@ -106,16 +107,6 @@ async function catchBearerToken() {
 }
 
 async function insertDe(inArguments, bearerToken) {
-  // const keyDataExtension = inArguments.filter((arg) =>
-  //   arg.hasOwnProperty("idDataExtension")
-  // )[0].idDataExtension;
-  // const contactKey = inArguments.filter((arg) =>
-  //   arg.hasOwnProperty("contactKey")
-  // )[0].contactKey;
-  // const campaignName = inArguments.filter((arg) =>
-  //   arg.hasOwnProperty("nomeCampanha")
-  // )[0].nomeCampanha;
-
   const keyDataExtension = inArguments.find(
     (arg) => arg.idDataExtension
   )?.idDataExtension;
