@@ -1,6 +1,56 @@
 // api/execute.js
 
-async function catchBearerToken() {
+import { createClient } from "redis";
+
+let redis;
+
+async function getRedis() {
+  try {
+    if (!redis) {
+      redis = createClient({
+        url: process.env.REDIS_URL,
+        socket: { connectTimeout: 2000 }, // garantir timeout abaixo de 10s
+      });
+      await redis.connect();
+    } else if (!redis.isOpen) {
+      // Garantir que o client está aberto
+      await redis.connect();
+    }
+
+    return redis;
+  } catch (error) {
+    throw new Error("Erro ao se conectar com Redis: " + error);
+  }
+}
+
+const tokenExpiredMargin = 60 * 1000;
+
+async function getInfoFromCache() {
+  try {
+    const client = await getRedis();
+    const token = await client.get("token");
+    const expired = await client.get("expire");
+    return { token, expiredDate: expired ? Number(expired) : null };
+  } catch (error) {
+    console.log("Erro ao recuperar informações do cache: " + error);
+    throw new Error("Erro ao recuperar informações do cache: " + error);
+  }
+}
+
+async function setInfoFromCache(token, expire) {
+  const date = Date.now();
+  const tokenExpireDate = date + expire * 1000;
+  try {
+    const client = await getRedis();
+    await client.set("token", token);
+    await client.set("expire", tokenExpireDate.toString());
+  } catch (error) {
+    console.log("Erro ao salvar informações no cache:  " + error);
+    throw new Error("Erro ao salvar informações no cache:  " + error);
+  }
+}
+
+async function fetchNewTokenFromApi() {
   const url = process.env.bearer_token_url;
   const clienteId = process.env.client_id;
   const clienteSecret = process.env.client_secret;
@@ -28,22 +78,51 @@ async function catchBearerToken() {
 
     const data = await response.json();
 
-    return data.access_token; // Retorna apenas o token
+    return { newToken: data.access_token, expires: data.expires_in };
   } catch (error) {
     throw error;
   }
 }
 
+async function getNewToken() {
+  const { newToken, expires } = await fetchNewTokenFromApi();
+  await setInfoFromCache(newToken, expires);
+  return newToken;
+}
+
+async function catchBearerToken() {
+  const { token, expiredDate } = await getInfoFromCache();
+  if (
+    token &&
+    expiredDate &&
+    token !== "" &&
+    Date.now() + tokenExpiredMargin < expiredDate
+  ) {
+    return token;
+  }
+
+  const newToken = await getNewToken();
+  return newToken;
+}
+
 async function insertDe(inArguments, bearerToken) {
-  const keyDataExtension = inArguments.filter((arg) =>
-    arg.hasOwnProperty("idDataExtension")
-  )[0].idDataExtension;
-  const contactKey = inArguments.filter((arg) =>
-    arg.hasOwnProperty("contactKey")
-  )[0].contactKey;
-  const campaignName = inArguments.filter((arg) =>
-    arg.hasOwnProperty("nomeCampanha")
-  )[0].nomeCampanha;
+  // const keyDataExtension = inArguments.filter((arg) =>
+  //   arg.hasOwnProperty("idDataExtension")
+  // )[0].idDataExtension;
+  // const contactKey = inArguments.filter((arg) =>
+  //   arg.hasOwnProperty("contactKey")
+  // )[0].contactKey;
+  // const campaignName = inArguments.filter((arg) =>
+  //   arg.hasOwnProperty("nomeCampanha")
+  // )[0].nomeCampanha;
+
+  const keyDataExtension = inArguments.find(
+    (arg) => arg.idDataExtension
+  )?.idDataExtension;
+  const contactKey = inArguments.find((arg) => arg.contactKey)?.contactKey;
+  const campaignName = inArguments.find(
+    (arg) => arg.nomeCampanha
+  )?.nomeCampanha;
 
   const url = `${process.env.insert_de_url}${keyDataExtension}/rows`;
 
@@ -52,7 +131,7 @@ async function insertDe(inArguments, bearerToken) {
       {
         UserKey: contactKey,
         email: contactKey,
-        date: new Date().toLocaleString(),
+        dateInsertion: new Date().toLocaleString(),
         campaignName: campaignName,
       },
     ],
@@ -116,5 +195,9 @@ export default async function execute(req, res) {
     res.status(500).json({
       error: error.message || "Erro interno do servidor",
     });
+  } finally {
+    if (redis && redis.isOpen) {
+      await redis.disconnect();
+    }
   }
 }
