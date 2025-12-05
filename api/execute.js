@@ -106,13 +106,10 @@ async function catchBearerToken() {
 }
 
 async function insertDe(inArguments, bearerToken) {
-  const keyDataExtension = inArguments.find(
-    (arg) => arg.idDataExtension
-  )?.idDataExtension;
+  const keyDataExtension = inArguments.find((arg) => arg.idDataExtension)?.idDataExtension;
   const contactKey = inArguments.find((arg) => arg.contactKey)?.contactKey;
-  const campaignName = inArguments.find(
-    (arg) => arg.nomeCampanha
-  )?.nomeCampanha;
+  const campaignName = inArguments.find((arg) => arg.nomeCampanha)?.nomeCampanha;
+  const emailUser = inArguments.find((arg) => arg.email)?.email;
 
   const url = `${process.env.insert_de_url}${keyDataExtension}/rows`;
 
@@ -120,7 +117,7 @@ async function insertDe(inArguments, bearerToken) {
     items: [
       {
         UserKey: contactKey,
-        email: contactKey,
+        email: emailUser,
         dateInsertion: new Date().toLocaleString(),
         campaignName: campaignName,
       },
@@ -175,7 +172,8 @@ export default async function execute(req, res) {
     res.status(200).json({
       outArguments: [
         {
-          returnValue: "Dados inseridos com sucesso!"
+          // Obrigatório ter esse campo pois está mapeado dentro do config.json
+          returnValue: "Dados inseridos com sucesso!",
         },
       ],
     });

@@ -1,12 +1,9 @@
 {
   "workflowApiVersion": "1.1",
-  "name": "Custom Activity Name",
-  "description": "Custom Activity Description",
   "metaData": {
     "icon": "images/icon.png",
     "category": "customer"
   },
-  "key": "bbcfc53d-ef0e-4e80-8297-748608582855",
   "type": "REST",
   "lang": {
     "pt-BR": {
@@ -19,6 +16,9 @@
       "inArguments": [
         {
           "contactKey": "{{Contact.Key}}"
+        },
+        {
+          "email": "{{Contact.Default.Email}}"
         }
       ],
       "outArguments": [

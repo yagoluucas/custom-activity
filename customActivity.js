@@ -1,6 +1,4 @@
 define(["postmonger"], function (Postmonger) {
-  "use strict";
-
   const connection = new Postmonger.Session();
   let payload = {};
 
