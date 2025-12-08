@@ -1,0 +1,56 @@
+{
+  "workflowApiVersion": "1.1",
+  "name": "Custom Activity Name",
+  "description": "Custom Activity Description",
+  "metaData": {
+    "icon": "images/icon.png",
+    "category": "customer"
+  },
+  "key": "bbcfc53d-ef0e-4e80-8297-748608582855",
+  "type": "REST",
+  "lang": {
+    "pt-BR": {
+      "name": "Inserir Contatos",
+      "description": "activity que insere contatos em uma data extension"
+    }
+  },
+  "arguments": {
+    "execute": {
+      "inArguments": [
+        {
+          "contactKey": "{{Contact.Key}}"
+        }
+      ],
+      "outArguments": [
+        {
+          "returnValue": "default"
+        }
+      ],
+      "timeout": 10000,
+      "retryCount": 3,
+      "retryDelay": 2000,
+      "url": "https://custom-activity-zeta.vercel.app/api/execute"
+    }
+  },
+  "configurationArguments": {
+    "applicationExtensionKey": "bbcfc53d-ef0e-4e80-8297-748608582855",
+    "save": {
+      "url": "https://custom-activity-zeta.vercel.app/api/save"
+    },
+    "publish": {
+      "url": "https://custom-activity-zeta.vercel.app/api/publish"
+    },
+    "stop": {
+      "url": "https://custom-activity-zeta.vercel.app/api/stop"
+    },
+    "validate": {
+      "url": "https://custom-activity-zeta.vercel.app/api/validate"
+    }
+  },
+  "userInterfaces": {
+    "configModal": {
+      "height": 500,
+      "width": 500
+    }
+  }
+}

@@ -1,0 +1,43 @@
+<!-- UI que aparece no Marketig Cloud -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Minha Custom Activity</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="js/require.js"></script>
+    <script>
+      require.config({
+        paths: {
+          // Precisa baixar, parou de dar erro na Salesforce ao adicionar essa linha
+          postmonger:
+            "js/postmonger", // Biblioteca para comunicação com o Marketing Cloud
+        },
+      });
+
+      require(["customActivity"]);
+    </script>
+  </head>
+  <body>
+    <main>  
+      <section class="logo">
+        <h1>Insert Contact</h1>
+        <img src="images/icon.png" alt="icone inserção">
+      </section>
+
+      <section>
+        <p>Insira abaixo o nome da campanha</p>
+        <form>
+          <label for="nomeCampanha">Nome da campanha:</label>
+          <input type="text" id="nomeCampanha" name="nomeCampanha" required min="3" placeholder="Digite o nome da campanha..."/>
+
+          <label for="idDataExtension">Informe o id da Data Extension:</label>
+          <input type="text" id="idDataExtension" name="idDataExtension" required min="3" placeholder="Digite o id da Data Extension..."/>
+          <span>O id da data extension pode ser encontrado em baixo do nome da mesma.</span>
+          <span>Esse id é importante pois ele irá definir em qual Data Extension o contato será inserido.</span>
+
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
