@@ -172,11 +172,15 @@ export default async function execute(req, res) {
     const resultadoInsercao = await insertDe(inArgs, bearerToken);
 
     // Passo 3: Retornar sucesso
-    res.status(200).json([
-      {
-      returnValue: resultadoInsercao,
-    }
-    ]);
+    res.status(200).json({
+            outArguments: [
+        {
+          resultado: "success",
+          message: "Dados inseridos na DE com sucesso",
+          data: resultadoInsercao,
+        },
+      ],
+    });
   } catch (error) {
     res.status(500).json({
       error: error.message || "Erro interno do servidor",
