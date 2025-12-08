@@ -3,20 +3,16 @@
   "public": true,
 "headers": [
     {
-      "source": "/config.json",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-store, max-age=0"
+          "value": "no-store, max-age=0, must-revalidate"
         }
       ]
     }
   ],
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/customActivity.js", "destination": "/customActivity.js" },
-    { "source": "/style.css", "destination": "/style.css" },
-    { "source": "/images/icon.svg", "destination": "/images/icon.svg" },
-    { "source": "/config.json", "destination": "/config.json" }
+  "rewrites":[
+    { "source": "/", "destination": "/index.html" }
   ]
 }
