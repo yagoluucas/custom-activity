@@ -173,11 +173,7 @@ export default async function execute(req, res) {
 
     // Passo 3: Retornar sucesso
     res.status(200).json({
-      outArguments: [
-        {
-          returnValue: "Dados inseridos com sucesso!"
-        },
-      ],
+      returnValue: resultadoInsercao,
     });
   } catch (error) {
     res.status(500).json({
