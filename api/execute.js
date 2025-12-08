@@ -172,9 +172,11 @@ export default async function execute(req, res) {
     const resultadoInsercao = await insertDe(inArgs, bearerToken);
 
     // Passo 3: Retornar sucesso
-    res.status(200).json({
+    res.status(200).json([
+      {
       returnValue: resultadoInsercao,
-    });
+    }
+    ]);
   } catch (error) {
     res.status(500).json({
       error: error.message || "Erro interno do servidor",
