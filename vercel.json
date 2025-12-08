@@ -1,6 +1,12 @@
 {
   "version": 2,
   "public": true,
+    "headers": [
+    {
+      "key": "Cache-Control",
+      "value": "no-store, max-age=0"
+    }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/customActivity.js", "destination": "/customActivity.js" },

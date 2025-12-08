@@ -23,7 +23,7 @@
       ],
       "outArguments": [
         {
-          "returnValue": "default"
+          "returnValue": {}
         }
       ],
       "timeout": 10000,
@@ -50,7 +50,8 @@
   "userInterfaces": {
     "configModal": {
       "height": 500,
-      "width": 500
+      "width": 500,
+      "fullscreen": true
     }
   }
 }
