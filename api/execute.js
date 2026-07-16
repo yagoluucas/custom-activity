@@ -6,6 +6,7 @@ import {
   sendLoggedError,
   sendLoggedResponse,
 } from "../lib/salesforceRequest.js";
+import { ensureRequestBody } from "../lib/readRequestBody.js";
 
 let redis;
 
@@ -172,6 +173,7 @@ export default async function execute(req, res) {
   let context;
 
   try {
+    await ensureRequestBody(req);
     context = parseSalesforceJwtRequest(req, endpoint);
 
     const inArguments = context.payload?.inArguments;
