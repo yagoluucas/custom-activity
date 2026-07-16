@@ -9,6 +9,7 @@ export default function saveActivity(req, res) {
   let context;
 
   try {
+    console.log(`Requisição: ${req}`);
     context = parseSalesforceJwtRequest(req, endpoint);
 
     return sendLoggedResponse(res, context, 200, {
