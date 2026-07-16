@@ -1,9 +1,20 @@
-export default function stop(req, res) {
-    console.log("===  VALIDATE ===");
-    try {
-        res.status(200).json({ status: "Activity stopped successfully" });
-    } catch (error) {
-        console.error("Error in /stop:", error);
-        res.status(400).json({ error: error.message });
-    }
+import {
+  parseSalesforceJwtRequest,
+  sendLoggedError,
+  sendLoggedResponse,
+} from "../lib/salesforceRequest.js";
+
+export default function validate(req, res) {
+  const endpoint = "validate";
+  let context;
+
+  try {
+    context = parseSalesforceJwtRequest(req, endpoint);
+
+    return sendLoggedResponse(res, context, 200, {
+      status: "Activity validated successfully",
+    });
+  } catch (error) {
+    return sendLoggedError(res, endpoint, error, context);
+  }
 }

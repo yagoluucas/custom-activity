@@ -29,22 +29,26 @@
       "timeout": 10000,
       "retryCount": 3,
       "retryDelay": 2000,
-      "url": "https://custom-activity-zeta.vercel.app/api/execute"
+      "url": "https://custom-activity-zeta.vercel.app/api/execute",
+      "useJwt": true
     }
   },
   "configurationArguments": {
     "applicationExtensionKey": "bbcfc53d-ef0e-4e80-8297-748608582855",
     "save": {
-      "url": "https://custom-activity-zeta.vercel.app/api/save"
+      "url": "https://custom-activity-zeta.vercel.app/api/save",
+      "useJwt": true
     },
     "publish": {
-      "url": "https://custom-activity-zeta.vercel.app/api/publish"
+      "url": "https://custom-activity-zeta.vercel.app/api/publish",
+      "useJwt": true
     },
     "stop": {
       "url": "https://custom-activity-zeta.vercel.app/api/stop"
     },
     "validate": {
-      "url": "https://custom-activity-zeta.vercel.app/api/validate"
+      "url": "https://custom-activity-zeta.vercel.app/api/validate",
+      "useJwt": true
     }
   },
   "userInterfaces": {
