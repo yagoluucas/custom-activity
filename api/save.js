@@ -14,4 +14,7 @@ export default function saveActivity(req, res) {
     return sendLoggedResponse(res, context, 200, {
       status: "Activity saved successfully",
     });
-  } catch
+  } catch (error) {
+    return sendLoggedError(res, endpoint, error, context);
+  }
+}
