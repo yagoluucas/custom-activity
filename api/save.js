@@ -13,6 +13,7 @@ export default async function saveActivity(req, res) {
     await ensureRequestBody(req);
 
     console.log("[SFMC][SAVE][RAW_BODY]", {
+      req: req,
       receivedAt: new Date().toISOString(),
       contentType: req.headers?.["content-type"],
       bodyType: Buffer.isBuffer(req.body) ? "buffer" : typeof req.body,
