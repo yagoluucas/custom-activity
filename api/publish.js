@@ -3,12 +3,14 @@ import {
   sendLoggedError,
   sendLoggedResponse,
 } from "../lib/salesforceRequest.js";
+import { ensureRequestBody } from "../lib/readRequestBody.js";
 
-export default function publish(req, res) {
+export default async function publish(req, res) {
   const endpoint = "publish";
   let context;
 
   try {
+    await ensureRequestBody(req);
     context = parseSalesforceJwtRequest(req, endpoint);
 
     return sendLoggedResponse(res, context, 200, {
