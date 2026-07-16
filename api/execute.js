@@ -1,6 +1,11 @@
 // api/execute.js
 
 import { createClient } from "redis";
+import {
+  parseSalesforceJwtRequest,
+  sendLoggedError,
+  sendLoggedResponse,
+} from "../lib/salesforceRequest.js";
 
 let redis;
 
@@ -9,11 +14,10 @@ async function getRedis() {
     if (!redis) {
       redis = createClient({
         url: process.env.REDIS_URL,
-        socket: { connectTimeout: 2000 }, // garantir timeout abaixo de 10s
+        socket: { connectTimeout: 2000 },
       });
       await redis.connect();
     } else if (!redis.isOpen) {
-      // Garantir que o client está aberto
       await redis.connect();
     }
 
@@ -32,21 +36,21 @@ async function getInfoFromCache() {
     const expired = await client.get("expire");
     return { token, expiredDate: expired ? Number(expired) : null };
   } catch (error) {
-    console.log("Erro ao recuperar informações do cache: " + error);
+    console.error("Erro ao recuperar informações do cache:", error);
     throw new Error("Erro ao recuperar informações do cache: " + error);
   }
 }
 
 async function setInfoFromCache(token, expire) {
-  const date = Date.now();
-  const tokenExpireDate = date + expire * 1000;
+  const tokenExpireDate = Date.now() + expire * 1000;
+
   try {
     const client = await getRedis();
     await client.set("token", token);
     await client.set("expire", tokenExpireDate.toString());
   } catch (error) {
-    console.log("Erro ao salvar informações no cache:  " + error);
-    throw new Error("Erro ao salvar informações no cache:  " + error);
+    console.error("Erro ao salvar informações no cache:", error);
+    throw new Error("Erro ao salvar informações no cache: " + error);
   }
 }
 
@@ -61,27 +65,25 @@ async function fetchNewTokenFromApi() {
     client_secret: clienteSecret,
   };
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payloadReq),
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payloadReq),
+  });
+
+  if (!response.ok) {
+    const responseBody = await response.text();
+    console.error("Falha ao obter bearer token", {
+      status: response.status,
+      responseBody,
     });
-
-    if (!response.ok) {
-      console.log("Response status:", response.status);
-      console.log("Response body:", await response.text());
-      throw new Error(`Erro ao obter bearer token: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    return { newToken: data.access_token, expires: data.expires_in };
-  } catch (error) {
-    throw error;
+    throw new Error(`Erro ao obter bearer token: ${response.status}`);
   }
+
+  const data = await response.json();
+  return { newToken: data.access_token, expires: data.expires_in };
 }
 
 async function getNewToken() {
@@ -92,6 +94,7 @@ async function getNewToken() {
 
 async function catchBearerToken() {
   const { token, expiredDate } = await getInfoFromCache();
+
   if (
     token &&
     expiredDate &&
@@ -101,85 +104,96 @@ async function catchBearerToken() {
     return token;
   }
 
-  const newToken = await getNewToken();
-  return newToken;
+  return getNewToken();
 }
 
 async function insertDe(inArguments, bearerToken) {
-  const keyDataExtension = inArguments.find((arg) => arg.idDataExtension)?.idDataExtension;
+  const keyDataExtension = inArguments.find(
+    (arg) => arg.idDataExtension
+  )?.idDataExtension;
   const contactKey = inArguments.find((arg) => arg.contactKey)?.contactKey;
-  const campaignName = inArguments.find((arg) => arg.nomeCampanha)?.nomeCampanha;
+  const campaignName = inArguments.find(
+    (arg) => arg.nomeCampanha
+  )?.nomeCampanha;
   const emailUser = inArguments.find((arg) => arg.email)?.email;
 
   const url = `${process.env.insert_de_url}${keyDataExtension}/rows`;
-
   const payload = {
     items: [
       {
         UserKey: contactKey,
         email: emailUser,
-        dateInsertion: new Date().toLocaleString(),
-        campaignName: campaignName,
+        dateInsertion: new Date().toISOString(),
+        campaignName,
       },
     ],
   };
 
-  console.log("Payload para inserção na DE: ", payload);
+  console.log("[SFMC][EXECUTE][DE_REQUEST]", {
+    url,
+    payload,
+  });
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const responseText = await response.text();
+  let responseBody = responseText;
 
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `BEARER ${bearerToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erro ao inserir dados na DE: ${response.body}`);
-    }
-
-    const data = await response.json();
-    console.log("Dados inseridos na DE: ", data);
-
-    return data;
-  } catch (error) {
-    console.error("Erro em insertDe:", error);
-    throw error;
+    responseBody = responseText ? JSON.parse(responseText) : null;
+  } catch {
+    // Mantém o conteúdo textual para diagnóstico.
   }
+
+  console.log("[SFMC][EXECUTE][DE_RESPONSE]", {
+    status: response.status,
+    ok: response.ok,
+    responseBody,
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Erro ao inserir dados na DE: ${response.status} ${responseText}`
+    );
+  }
+
+  return responseBody;
 }
 
 export default async function execute(req, res) {
-  console.log("=== EXECUTE ===");
+  const endpoint = "execute";
+  let context;
 
   try {
-    const inArgs = req.body.inArguments;
+    context = parseSalesforceJwtRequest(req, endpoint);
 
-    if (!inArgs) {
-      return res.status(400).json({
-        error: "inArguments não fornecido",
-      });
+    const inArguments = context.payload?.inArguments;
+
+    if (!Array.isArray(inArguments)) {
+      const validationError = new Error("inArguments não fornecido no JWT");
+      validationError.statusCode = 400;
+      throw validationError;
     }
 
-    // Passo 1: Obter o bearer token
     const bearerToken = await catchBearerToken();
+    const resultadoInsercao = await insertDe(inArguments, bearerToken);
 
-    // Passo 2: Inserir dados na DE
-    const resultadoInsercao = await insertDe(inArgs, bearerToken);
-
-    // Passo 3: Retornar sucesso
-    res.status(200).json({
+    return sendLoggedResponse(res, context, 200, {
       outArguments: [
         {
-          // Obrigatório ter esse campo pois está mapeado dentro do config.json
           returnValue: "Dados inseridos com sucesso!",
         },
       ],
+      result: resultadoInsercao,
     });
   } catch (error) {
-    res.status(500).json({
-      error: error.message || "Erro interno do servidor",
-    });
+    return sendLoggedError(res, endpoint, error, context);
   }
 }
