@@ -3,12 +3,15 @@ import {
   sendLoggedError,
   sendLoggedResponse,
 } from "../lib/salesforceRequest.js";
+import { ensureRequestBody } from "../lib/readRequestBody.js";
 
-export default function saveActivity(req, res) {
+export default async function saveActivity(req, res) {
   const endpoint = "save";
   let context;
 
   try {
+    await ensureRequestBody(req);
+
     console.log("[SFMC][SAVE][RAW_BODY]", {
       receivedAt: new Date().toISOString(),
       contentType: req.headers?.["content-type"],
